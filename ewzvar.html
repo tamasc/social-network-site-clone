@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Web tervezés - Projekt követelmények - 2018 - Levelező</title>
+    <style type="text/css">
+      body {
+        font-family: "Segoe UI",Arial,sans-serif;
+        background-color: #fcfcfc;
+        font-size:16px;
+        padding-bottom:50px;
+      }
+      table,td,th {
+        border-collapse: collapse;
+      }
+      th,td {
+        border: 1px solid #000000;
+        padding:5px;
+      }
+      table {
+        margin:10px;
+      }
+      td:first-child {
+        /*font-weight:bold;*/
+        vertical-align: top;
+      }
+      .stfill {
+        font-weight:bold;
+        color:#DD4132;
+      }
+      .sum {
+        border-top:2px solid #000000;
+      }
+      .sum td {
+        font-weight:bold;
+      }
+      .task {
+        /*font-weight:bold;*/
+      }
+      .subtask {
+        padding-left:25px;
+      }
+      .note {
+        font-size:12px;
+        display:block;
+      }
+      tr.sum>td:nth-child(2),
+      td:nth-child(3),
+      td:nth-child(4) {
+        text-align: center;
+      }
+      tr.header {
+        border-bottom: 2px solid #000000;
+      }
+      .example {
+        font-style: italic;
+        color:grey;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Web tervezés - projekt követelmények</h1>
+    <div>
+      <h2>Általános információk</h2>
+      <ul>
+
+        <li>A feladatot egyénileg kell elkészíteni. Csapatmunkára nincs lehetőség.</li>
+        <li>A megoldásoknak Google Chrome, Firefox és Internet Explorer (legalább 9+) alatt is minden nagyításban/kicsinyítésben használhatóknak és jól működőknek, egy méretben szépeknek kell lenniük. A kabinetben is használt verziókon fogjuk ellenőrizni.</li>
+        <li>A honlap kódjának átláthatónak kell lenni. A projekt célja, hogy a tanult elemek ismeretét felmérje, ezért a felesleges elemeket, automatikus generálásból eredő túlbonyolított megoldásokat, illetve a gyakorlatvezető által előzetesen nem engedélyezett plusz dolgokat (pl. javascript kódok, flash stb.) tartalmazó honlap el lesz utasítva!</li>
+        <li>A projektben használt minden megvalósításnak különböznie kell annyira a kurzus példáitól, hogy megállapítható legyen annak megértése. Ennek megsértése kötelező követelmény esetén a projekt elutasítását vonja maga után, választható követelmény esetén pedig az érintett követelmény nem fog pontot kapni.</li>
+        <li>A projekteknek különbözniük kell annyira egymástól, hogy ne merüljön fel a másolás gyanúja. Túl hasonló projektek esetén javítás jelleggel azok módosítását fogjuk kérni.  Amennyiben javítás után is túl hasonlók lesznek, mindkét projekt el lesz utasítva. </li>
+        <li>A feladat kiírásától különböző megoldások (más nyelvek, szkriptek, AJAX) nem érnek pontot.</li>
+        <li>A követelmények megvalósításához néhány kisméretű fájl is elegendő.</li>
+        <li>Az elkészített feladatot egy zip fájlban kell feltölteni CooSpace-re a követelményekben megfogalmazott határidőig.</li>
+        <li>A feladat kötelező részét képezi a választott téma ismertetése. Az elkészített projektnek a választott témának kell megfelelnie.</li>
+        <li>Csak működő, látható és értelmes formázások érnek pontot. Például nem ér pontot: fehér háttéren fehér szöveg, CSS animáció ami nem jelenik meg a weboldalon, a rossz útvonalak miatt nem működő/látható tartalom.</li>
+        <li>A táblázatban dőlt betűkkel vannak jelölve azok a követelmények (5.3, 5.4, 9), amelyek javítására lehetőség van az értékelést követően.</li>
+        <li>Az 5.3-as és 5.4-es követelményeknél fel kell sorolni a megvalósított elemeket. A követelményeknél (1, 2, 3, 3.1, 3.2, 3.3., 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4 felsorolt elemei) az egyes követelményeket linkké kell alakítani, melyek arra az oldalra navigálnak, ahol láthatóak.</li>
+        <li>Az elfogadáshoz egy XAMPP környezetben futó webalkalmazást (PHP) kell elkészíteni.</li>
+        <li>PHP keretrendszerek használatára nincs lehetőség.</li>
+        <li>A projekt megvalósítása során adatbázist nem lehet használni.</li>
+        <li>A projekt elkészítése során nem használható semmilyen CSS könyvtár (mint pl. Bootstrap).</li>
+        <li>Ikonkészleteket és fontokat viszont lehet használni (pl Font Awesome).</li>
+        <li>A zip fájlnak tartalmaznia kell egy mappát, melynek neve a hallgató Neptun-kódja (kis betűvel). A projekt fájljait ebben kell elhelyezni.</li>
+        <li>Kicsomagolás után a projekt mappáját (Neptun-kóddal megegyező mappa név) a XAMPP htdocs mappájába másolva, mindenféle konfiguráció nélkül a weboldalnak működnie kell a <em>localhost/[neptun]</em> url-t megnyitva böngészőben, ahol az [neptun] a hallgató Neptun-kódját jelenti (szintén kis betűvel). (A portszámtól eltekintve.)</li>
+        <li>Ezen dokumentumot kitöltve mellékelni kell a beadott zip fájlban.</li>
+        <li>A fenti elvárások a pontozásban "Formai követelmények" néven szerepelnek.</li>
+        <li class="stfill">Beadás előtt ajánlott ellenőrizni a kabinetben, hogy működik-e, mert a nem működő megoldások nem kerülnek pontozásra!</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Hallgató adatai</h2>
+      <ul>
+        <li>Név: <span class="stfill">Czerjak Tamás</span></li>
+        <li>Neptun-kód: <span class="stfill">EWZVAR</span></li>
+        <li>Szak, évfolyam: <span class="stfill">Programtervező informatikus, levelező, 2016/17</span></li>
+        <li>E-mail cím: <span class="stfill">tamas.czerjak@gmail.com, Czerjak.Tamas@stud.u-szeged.hu</span></li>
+        <li>Használt szabvány: <span class="stfill">HTML5</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Választott téma</h2>
+      <p>
+         <span class="stfill"> Facebookra hajazó közösségi oldal, ahol hírek megosztására van lehetőség.
+            A hír felvételére a hírek oldalon (/board.php) van lehetőség.
+            A hírek dinamikusan jelennek meg és a "hírek viewporton belül scrollozhatóak.
+            A navbar elemei a bejelenkezés meglététől függően dinamikusan jelennek meg.
+            Ezek mellett minimális profilszerkesztési funkcionalitás is van az oldalon (profilképet le lehet cserélni).
+            Az oldal arculata hasonlít a Facebookéra, de nincs 100%-ban követve, csak iránymutatásként használtam.</span>
+      </p>
+      <p>
+        A projektnek kötelező jelleggel tartalmaznia kell fehasználókezelést. <br>
+        Kiemelt funkciók (legalább 3 darab a kötelezőkön kívül):
+      </p>
+      <ul>
+        <li><b>Felhasználó kezelés: regisztráció, belépés</b></li>
+        <li><span class="stfill">Profilkép módosítás</span></li>
+        <li><span class="stfill">Hírek közzététele, dinamikus megjelenítése</span></li>
+        <li><span class="stfill">Átírányítás, ha nincs bejelentkezve a felhasználó</span></li>
+        <li><span class="stfill">Dinamikus navbar elem megjelenítés</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Pontozás</h2>
+      <p>
+        Ezt a részt az oktató tölti ki.
+      </p>
+      <table>
+        <tr class="header">
+          <th>
+            
+          </th>
+          <th>
+            Részfeladat
+          </th>
+          <th>
+            Szerezhető pontszám
+          </th>
+          <th>
+            Szerzett pontszám
+          </th>
+          <th>
+            Megjegyzés
+          </th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>
+            Formai követelmények
+          </td>
+          <td>5</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            2
+          </td>
+          <td class="task">
+            <a href="board.php">Szabványos dinamikusan generált HTML</a>
+            <div class="note">Hibás oldalanként 1 pont levonás. Minimum 0 pont.</div>
+          </td>
+          <td>10</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="task" colspan="99">
+            <a href="board.php">Menü megvalósítás</a>
+          </td>
+        </tr>
+        <tr>
+          <td>3.1</td>
+          <td class="subtask">
+            <a href="board.php">Linkek használata</a>
+          </td>
+          <td>1</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>3.2</td>
+          <td class="subtask">
+            <a href="board.php">Lista használata</a>
+          </td>
+          <td>1</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>3.3</td>
+          <td class="subtask">
+            <a href="board.php">CSS formázás</a>
+            <span class="note">- Az aktuális menüpont eltérő.</span>
+            <span class="note">- Az egér rávitelével a kinézet módosul.</span>
+          </td>
+          <td>2</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            3.4
+          </td>
+          <td class="subtask">
+            <a href="board.php">Az éppen megnyitott menüpont ki van emelve</a>
+          </td>
+          <td>1</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            3.5
+          </td>
+          <td class="subtask">
+            <a href="login.php">Hiba nélkül működő navigáció</a>
+          </td>
+          <td>2</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td class="task" colspan="99">
+            <a href="board.php">A weboldal struktúrája</a>
+          </td>
+        </tr>
+        <tr>
+          <td>4.1</td>
+          <td class="subtask">
+            <a href="board.php">Div elemekkel van kialakítva</a>
+            <span class="note">Fejléc, lábléc, törzs, oldalsáv, menü.</span>
+            <span class="note">HTML5 esetén HTML5 elemek.</span>
+          </td>
+          <td>5</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>4.2</td>
+          <td class="subtask">
+            <a href="about.php">Táblázat elemek szabályos használata</a>
+            <span class="note">Fejlécekkel.</span>
+          </td>
+          <td>2</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>4.3</td>
+          <td class="subtask">
+            <a href="registration.php">Űrlap elemek használata</a>
+            <span class="note">Legalább 5 féle beviteli mező.</span>
+            <span class="note">Label elemekkel.</span>
+          </td>
+          <td>5</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>4.4</td>
+          <td class="subtask">
+            <a href="profile.php">Kép elem használata</a>
+          </td>
+          <td>1</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td class="task" colspan="99">
+            CSS
+          </td>
+        </tr>
+        <tr>
+          <td>5.1</td>
+          <td class="subtask">
+            <a href="board.php">Elemkijelölő, azonosítókijelölő, <br>osztálykijelölő, összetett kijelölők használata</a>
+          </td>
+          <td>4</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>5.2</td>
+          <td class="subtask">
+            <a href="board.php">Nyomtatási stíluslap</a>
+            <span class="note">Az 5 db HTML oldal egyikéhez elég elkészíteni <br>a stíluslapot az órán tanultaknak megfelelően.</span>
+          </td>
+          <td>2</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>5.3</td>
+          <td class="subtask">
+            <i>A weboldal struktúra elemeinek testreszabása</i>
+            <span class="note">Formázás, pozícionálás, méretezés, főként flexboxszal pozicionálás</span>
+            <span class="note">- fix fejléc és lábléc</span>
+            <span class="note">- törzs méretének számítása</span>
+          </td>
+          <td>5</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>5.4</td>
+          <td class="subtask">
+            <i>Dizájn</i>
+            <span class="note">A korábbi részfeladatok teljesítéséhez használt <br>szabályokon felül.</span>
+            <span class="note">Szabadon használható:</span>
+            <span class="note">- formázás</span>
+            <span class="note">- méretezés</span>
+            <span class="note">- pozícionálás</span>
+            <span class="note">- animáció</span>
+            <span class="note">- transzformáció</span>
+            <span class="note">- pseudo elemek (after)</span>
+            <span class="note">- lekerekített sarkok</span>
+            <span class="note">- árnyékok</span>
+          </td>
+          <td>15</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            6
+          </td>
+          <td class="task" colspan="99">
+            Felhasználó kezelés
+          </td>
+        </tr>
+        <tr>
+          <td>
+            6.1
+          </td>
+          <td class="subtask">
+            Menetkövetés
+            <div class="note">Szabályos session használat.</div>
+          </td>
+          <td>1</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            6.2
+          </td>
+          <td class="subtask">
+            Bejelentkezés
+            <div class="note">- hibás adatok esetén hibaüzenet</div>
+            <div class="note">- helyes adatok esetén működő bejelentkezés</div>
+          </td>
+          <td>2</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            6.3
+          </td>
+          <td class="subtask">
+            Belépett felhasználó ellenőrzése
+            <div class="note">Amennyiben egy nem belépett felhasználó olyan oldalt <br> nyit meg, amit csak belépett felhasználó tud elérni, <br> irányítson át a bejelentkezéshez.</div>
+          </td>
+          <td>2</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            6.4
+          </td>
+          <td class="subtask">
+            Kijelentkezés
+          </td>
+          <td>1</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            7
+          </td>
+          <td class="task" colspan="99">
+            Regisztráció
+          </td>
+        </tr>
+        <tr>
+          <td>
+            7.1
+          </td>
+          <td class="subtask">
+            Működő regisztráció
+          </td>
+          <td>1</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            7.2
+          </td>
+          <td class="subtask">
+            Űrlap ellenőrzés PHP oldalon
+            <div class="note">- nem kitöltött űrlap ellenőrzés</div>
+            <div class="note">- foglalt-e a felhasználónév</div>
+            <div class="note">- jelszó ismétlő mező ellenőrzés</div>
+          </td>
+          <td>3</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            8
+          </td>
+          <td class="task" colspan="99">
+            PHP
+          </td>
+        </tr>
+        <tr>
+          <td>
+            8.1
+          </td>
+          <td class="subtask">
+            A szabad témaválasztás miatt a pontozás <br> a megvalósítás összetettsége alapján történik.
+            <div class="note">Pontot ér:</div>
+            <div class="note">- ciklus használat (max 2x): 1-3p</div>
+            <div class="note">- GET paraméter alapján adat megjelenítés: 1-3p</div>
+            <div class="note">- űrlapos adatkezelés megvalósítás (max 2x): 1-4p</div>
+            <div class="note">- kép feltöltés: 2-5p</div>
+            <div class="note">- összetett számítás: 1-2p</div>
+            <div class="note">- fájlkezelés: 2-5p</div>
+            <div class="note">- összetett adatok tárolása session-ben: 2-5p</div>
+            <div class="note">- dátum kezelés: 1-2p</div>
+            <div class="note">- string műveletek: 1-2p</div>
+            <div class="note">- belépéshez kötött funkció: 1-2p</div>
+            <div class="note">- kivételkezelés: 1-2p</div>
+            <div class="note">- menetkövetés letiltott sütikkel is: 5p</div>
+          </td>
+          <td>24</td><td></td><td></td>
+        </tr>
+        <tr>
+          <td>
+            9
+          </td>
+          <td class="task">
+            <i>Megvalósítás minősége és átláthatósága</i>
+            <div class="note">Az alábbiakból lehet összeszedni:</div>
+            <div class="note">- objektum orientáltság használata: 1-4p</div>
+            <div class="note">- függvények használata: 1-2p</div>
+            <div class="note">- kód ismétlések elkerülése: 1-2p</div>
+            <div class="note">- logikusan, fájlokba szervezett kód: 1p</div>
+            <div class="note">- CSS betöltése külön fájlból: 1p</div>
+          </td>
+          <td>5</td><td></td><td></td>
+        </tr>
+        <tr class="sum">
+          <td colspan="2">Összpontszám:</td>
+          <td>100</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h2>Megjegyzés</h2>
+      <p>A hallgató opcionális megjegyzése a beadott feladathoz.</p>
+      <p>
+         <span class="stfill">[Hallgató tölti ki...]</span>
+      </p>
+    </div>
+    <p> Közzétéve: 2018. 03. 12. </p>
+
+  </body>
+</html>
