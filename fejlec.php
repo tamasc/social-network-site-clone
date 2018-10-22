@@ -1,3 +1,6 @@
+<?php
+    include("./helpers/db-connection.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>

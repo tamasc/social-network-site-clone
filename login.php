@@ -38,22 +38,16 @@
                     session_destroy();
                     die();
                 }
-                $felhasznalok = array();
-                $adatok = file("nevek");
-                foreach ($adatok as &$f) {
-                    $f = trim($f, "\n\t\r");
-                    $f = trim($f, " ");
-                    $tomb = explode("|", $f);
-                    $felhasznalok[$tomb[0]] = $tomb[1];
-                }
-                if (!isset($felhasznalok[$username])) {
-                    echo "<p class=\"error\">A felhasználó nem létezik!</p>";
+                $db = new DBConnection();
+                $passwordFromDB = $db->getPassword($username);
+                if (!isset($passwordFromDB)) {
+                    echo "<p class=\"error\">Helytelen bejelentkezési adatok!</p>";
                     echo "<br>";
                     session_unset();
                     session_destroy();
                     die();
-                } elseif(!($felhasznalok[$username] == $password)) {
-                    echo "<p class=\"error\">Helytelen jelszó!</p>";
+                } elseif(!($passwordFromDB == $password)) {
+                    echo "<p class=\"error\">Helytelen bejelentkezési adatok!</p>";
                     echo "<br>";
                     session_unset();
                     session_destroy();
