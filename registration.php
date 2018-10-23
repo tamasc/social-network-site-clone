@@ -19,14 +19,8 @@ function runValidation() {
             echo "<br>";
             return;
         }
-        $felhasznalok = array();
-        $adatok = file("nevek");
-        foreach ($adatok as &$f) {
-            $f = trim($f, "\n\t\r");
-            $f = trim($f, " ");
-            $tomb = explode("|", $f);
-            $felhasznalok[$tomb[0]] = $tomb[1];
-        }
+        $db = new DBConnection();
+        $felhasznalok = $db->getUsers();
         if (isset($felhasznalok[$username])) {
             echo "<p class=\"error\">Ilyen nevű felhasználó már létezik!</p>";
             echo "<br>";

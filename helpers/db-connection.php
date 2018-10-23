@@ -26,7 +26,7 @@
             mysqli_close($connection);
             $usersArray = array();
             while (($row = mysqli_fetch_assoc($res))!= null) {
-                $usersArray[] = $row;
+                $usersArray[$row['username']] = $row['password'];
             }
             return $usersArray;
         }
