@@ -46,6 +46,28 @@
             return $passwordArray[0]['password'];
         }
 
+        public function insertUser($userName, $password) {
+            $connection = $this->getConnection();
+            $sql = "INSERT INTO users VALUES ('$userName', '$password');";
+            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
+            $insertId = $connection->insert_id;
+            mysqli_close($connection);
+            return $insertId;
+        }
+
+        public function insertPicture($fileName, $data, $owner) {
+            $connection = $this->getConnection();
+            $sqlInsertPicture = "INSERT INTO pictures (name, file) VALUES ('$fileName', '$data');";
+            $resInsert = mysqli_query($connection, $sqlInsertPicture) or die ('Hibás utasítás a kép elmentésénél!');
+            $pictureId = $connection->insert_id;
+            $sqlPicUserConn = "INSERT INTO pictureowners (pictureid, userName) VALUES ($pictureId, '$owner');";
+            echo $sqlPicUserConn;
+            $resPicUserConn = mysqli_query($connection, $sqlPicUserConn) or die ('Hibás utasítás a kép - felhasználó kapcsolat létrehozásánál!');
+            $insertId = $connection->insert_id;
+            mysqli_close($connection);
+            return $insertId;
+        }
+
         private function getConnection() {
             $connection = mysqli_connect($this->host, $this->uname, $this->pwd, $this->database) or die("Hibás csatlakozás!");
             mysqli_select_db($connection, "facebook");

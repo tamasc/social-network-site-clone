@@ -32,16 +32,14 @@ function runValidation() {
         }
         $filename = $_FILES["profile-picture"]["name"];
         $tempfile = $_FILES["profile-picture"]["tmp_name"];
+        $data = addslashes(file_get_contents($tempfile));
         $ext = pathinfo(basename($filename), PATHINFO_EXTENSION);
         if(!in_array($ext,  array('jpeg' ,'jpg'))) {
             echo "<p class=\"error\">Csak jpg és jpeg formátumú kép tölthető fel!</p>";
             return;
         }
-        move_uploaded_file($tempfile, "img/" . $username . ".jpg");
-        $nevek_file = fopen("nevek", "a") or die("nem lehet a fájlt megnyitni");
-        $user_data = $username . "|" . $password;
-        fwrite($nevek_file, "\n". $user_data);
-        fclose($nevek_file);
+        $db->insertUser($username, $password);
+        $db->insertPicture($filename, $data, $username);
         header('Location: login.php');
         return;
     }
