@@ -1,5 +1,6 @@
 <?php
     include("./helpers/db-connection.php");
+    $db = new DBConnection();
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,23 +14,27 @@
     <img class="main-logo" src="assets/facebook-app-logo.svg" alt="facebook logo">
     <a class="profile" href="
         <?php
-            if (isset($_SESSION["user"])) {
+            $user = isset($_SESSION["user"]) ? $_SESSION["user"] : false;
+            if ($user) {
                 echo "profile.php";
             } else {
                 echo "login.php";
             }
         ?>
     ">
-        <div>
-            <?php
-                $profile_picture = "assets/profile-placeholder.jpg";
-                if (isset($_SESSION["user"])) {
-                    $profile_picture = "img/" .  $_SESSION["user"] . ".jpg";
-                    echo $_SESSION["user"];
+        <?php
+            $profile_picture = "assets/profile-placeholder.jpg";
+            $alt = $user ? 'profile picture' : 'profile picture placeholder';
+            if ($user) {
+                $rawData = $db->getImage($user);
+                if ($rawData != null) {
+                    $data = base64_encode($rawData);
+                    $profile_picture = "data:image/jpeg;base64, $data";
                 }
-            ?>
-        </div>
-        <img src="<?php echo $profile_picture ?>" alt="profile picture placeholder">
+                echo "<div>$user</div>";
+            }
+            echo "<img src=\"$profile_picture\" alt=\"$alt\">";
+        ?>
     </a>
 </header>
 <nav>

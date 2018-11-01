@@ -24,16 +24,20 @@ include("fejlec.php");
                 fwrite($hirek_file, "\n". $news_data);
                 fclose($hirek_file);
                 unset($_POST);
-                header("Location: " . $_SERVER['PHP_SELF']);
             }
             $hirek = array_reverse(file("hirek"));
             foreach ($hirek as $hir) {
                 $hirTomb = explode("|", $hir);
-                $thumbnail_url = "img/" . $hirTomb[0] . ".jpg";
+                $profile_picture = "assets/profile-placeholder.jpg";
+                $rawData = $db->getImage($hirTomb[0]);
+                if ($rawData != null) {
+                    $data = base64_encode($rawData);
+                    $profile_picture = "data:image/jpeg;base64, $data";
+                }
         ?>
                 <article>
                     <div class="user-data-container">
-                        <img class="thumbnail" src="<?php echo $thumbnail_url ?>" alt="profile">
+                        <img class="thumbnail" src="<?php echo $profile_picture ?>" alt="profile">
                         <p>
                             <?php echo $hirTomb[0] ?>
                         </p>

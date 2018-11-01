@@ -68,6 +68,21 @@
             return $insertId;
         }
 
+        public function getImage($user) {
+            $connection = $this->getConnection();
+            $sql = "SELECT file FROM pictures JOIN pictureowners ON id=pictureid WHERE username='$user';";
+            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
+            mysqli_close($connection);
+            $imageArray = array();
+            while (($row = mysqli_fetch_assoc($res))!= null) {
+                $imageArray[] = $row;
+            }
+            if (!isset($imageArray[0])) {
+                return null;
+            }
+            return $imageArray[0]['file'];
+        }
+
         private function getConnection() {
             $connection = mysqli_connect($this->host, $this->uname, $this->pwd, $this->database) or die("Hibás csatlakozás!");
             mysqli_select_db($connection, "facebook");

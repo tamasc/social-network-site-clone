@@ -1,13 +1,24 @@
 <?php
 session_start();
 include("fejlec.php");
+if (!isset($_SESSION["user"])) {
+    session_destroy();
+    header('Location: login.php');
+    die();
+}
+$profile_picture = "assets/profile-placeholder.jpg";
+$rawData = $db->getImage($_SESSION["user"]);
+if ($rawData != null) {
+    $data = base64_encode($rawData);
+    $profile_picture = "data:image/jpeg;base64, $data";
+}
 ?>
     <main class="modify-profile flex-middle">
         <section>
             <h1>
                 Profil szerkesztése
             </h1>
-            <img src="img/<?php echo $_SESSION['user'] . '.jpg' ?>" alt="profilkép">
+            <img src="<?php echo $profile_picture ?>" alt="profilkép">
             <form class="flex-middle" action="" method="post" enctype="multipart/form-data">
                 <label class="required" for="profile-picture">Profilkép módosítása</label>
                 <input type="file" required name="profile-picture" accept=".jpg,.jpeg">
