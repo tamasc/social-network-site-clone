@@ -19,17 +19,17 @@ include("fejlec.php");
         </form>
         <?php
             if (isset($_POST["news"])) {
+                $db->insertNews($_SESSION["user"], $_POST["news"]);
                 $hirek_file = fopen("hirek", "a") or die("nem lehet a fájlt megnyitni");
                 $news_data = $_SESSION["user"] . "|" . $_POST["news"];
                 fwrite($hirek_file, "\n". $news_data);
                 fclose($hirek_file);
                 unset($_POST);
             }
-            $hirek = array_reverse(file("hirek"));
+            $hirek = array_reverse($db->getNews());
             foreach ($hirek as $hir) {
-                $hirTomb = explode("|", $hir);
                 $profile_picture = "assets/profile-placeholder.jpg";
-                $rawData = $db->getImage($hirTomb[0]);
+                $rawData = $db->getImage($hir['user_name']);
                 if ($rawData != null) {
                     $data = base64_encode($rawData);
                     $profile_picture = "data:image/jpeg;base64, $data";
@@ -39,11 +39,11 @@ include("fejlec.php");
                     <div class="user-data-container">
                         <img class="thumbnail" src="<?php echo $profile_picture ?>" alt="profile">
                         <p>
-                            <?php echo $hirTomb[0] ?>
+                            <?php echo $hir['user_name'] ?>
                         </p>
                     </div>
                     <p>
-                        <?php echo $hirTomb[1] ?>
+                        <?php echo $hir['text'] ?>
                     </p>
                 </article>
         <?php

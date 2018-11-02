@@ -90,6 +90,25 @@
             mysqli_close($connection);
         }
 
+        public function insertNews($user, $newsText) {
+            $connection = $this->getConnection();
+            $sql = "INSERT INTO news (user_name, text) VALUES ('$user', '$newsText');";
+            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás a hír eltárolásánal!');
+            mysqli_close($connection);
+        }
+
+        public function getNews() {
+            $connection = $this->getConnection();
+            $sql = "SELECT * FROM news";
+            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
+            mysqli_close($connection);
+            $newsArray = array();
+            while (($row = mysqli_fetch_assoc($res))!= null) {
+                $newsArray[] = $row;
+            }
+            return $newsArray;
+        }
+
         private function getConnection() {
             $connection = mysqli_connect($this->host, $this->uname, $this->pwd, $this->database) or die("Hibás csatlakozás!");
             mysqli_select_db($connection, "facebook");
