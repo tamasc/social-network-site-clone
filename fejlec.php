@@ -1,6 +1,7 @@
 <?php
     include("./helpers/db-connection.php");
     $db = new DBConnection();
+    ob_start();
 ?>
 <!DOCTYPE html>
 <html>

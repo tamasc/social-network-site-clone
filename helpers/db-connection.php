@@ -83,6 +83,13 @@
             return $imageArray[0]['file'];
         }
 
+        public function updatePicture($user, $pictureName, $data) {
+            $connection = $this->getConnection();
+            $sql = "UPDATE pictures SET name = '$pictureName', file = '$data' WHERE id=(SELECT pictureid FROM pictureowners WHERE username='$user');";
+            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
+            mysqli_close($connection);
+        }
+
         private function getConnection() {
             $connection = mysqli_connect($this->host, $this->uname, $this->pwd, $this->database) or die("Hibás csatlakozás!");
             mysqli_select_db($connection, "facebook");

@@ -28,12 +28,13 @@ if ($rawData != null) {
             if (isset($_FILES["profile-picture"])) {
                 $filename = $_FILES["profile-picture"]["name"];
                 $tempfile = $_FILES["profile-picture"]["tmp_name"];
+                $data = addslashes(file_get_contents($tempfile));
                 $ext = pathinfo(basename($filename), PATHINFO_EXTENSION);
                 if(!in_array($ext,  array('jpeg' ,'jpg'))) {
                     echo "<p class=\"error\">Csak jpg és jpeg formátumú kép tölthető fel!</p>";
                     die();
                 }
-                move_uploaded_file($tempfile, "img/" . $_SESSION['user'] . ".jpg");
+                $db->updatePicture($_SESSION["user"], $filename, $data);
                 unset($_POST);
                 unset($_FILES);
                 header("Location: " . $_SERVER['PHP_SELF']);
