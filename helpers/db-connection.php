@@ -88,13 +88,18 @@
             $this->getSimpleQuerries($sql);
         }
 
-        public function getNews() {
-            $sql = "SELECT * FROM news";
+        public function getNews($user) {
+            $sql = "SELECT * FROM news WHERE user_name IN (SELECT user1 FROM relations WHERE user2='$user') OR user_name IN (SELECT user2 FROM relations WHERE user1='$user');";
             return $this->getArrayLikeQueries($sql);
         }
 
         public function insertRelation($user1, $user2) {
             $sql =  "INSERT INTO relations (user1, user2) VALUES ('$user1', '$user2');";
+            $this->getSimpleQuerries($sql);
+        }
+
+        public function deleteRelation($user1, $user2) {
+            $sql =  "DELETE FROM relations WHERE (user1='$user1' AND user2='$user2') OR (user1='$user2' AND user2='$user1')";
             $this->getSimpleQuerries($sql);
         }
 

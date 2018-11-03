@@ -51,9 +51,6 @@ include("fejlec.php");
             if (isset($_POST['friend'])) {
                 $db->insertRelation($_SESSION["user"], $_POST['friend']);
                 unset($_POST);
-                $page = $_SERVER['PHP_SELF'];
-                $sec = "10";
-                header("Refresh: $sec; url=$page");
             }
         ?>
     </main>

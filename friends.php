@@ -7,6 +7,20 @@ if (!isset($_SESSION["user"])) {
 }
 include("fejlec.php");
 ?>
+    <script>
+        function removeFriend(user) {
+            var formData = new FormData();
+            formData.append('friend', user);
+            fetch('friends.php', {
+                method: 'POST',
+                credentials: 'include',
+                body: formData,
+            })
+            .then(() => {
+                window.location.reload();
+            });
+        }
+    </script>
     <main class="board">
         <h1>
             Ismerősök
@@ -23,13 +37,20 @@ include("fejlec.php");
         ?>
                 <article>
                     <div class="user-data-container">
-                        <img class="thumbnail" src="<?php echo $profile_picture ?>" alt="profile">
-                        <p>
-                            <?php echo $friend ?>
-                        </p>
+                        <div class="user-data-wrapper">
+                            <img class="thumbnail" src="<?php echo $profile_picture ?>" alt="profile">
+                            <p>
+                                <?php echo $friend ?>
+                            </p>
+                        </div>
+                        <img class="icon" src="assets/remove-friend.svg" alt="remove friend icon" onclick="removeFriend('<?php echo $friend ?>')">
                     </div>
                 </article>
         <?php
+            }
+            if (isset($_POST['friend'])) {
+                $db->deleteRelation($_SESSION["user"], $_POST['friend']);
+                unset($_POST);
             }
         ?>
     </main>

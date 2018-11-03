@@ -27,7 +27,7 @@ include("fejlec.php");
                 fclose($hirek_file);
                 unset($_POST);
             }
-            $hirek = array_reverse($db->getNews());
+            $hirek = array_reverse($db->getNews($_SESSION["user"]));
             foreach ($hirek as $hir) {
                 $profile_picture = "assets/profile-placeholder.jpg";
                 $rawData = $db->getImage($hir['user_name']);
