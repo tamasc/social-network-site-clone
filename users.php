@@ -7,6 +7,20 @@ if (!isset($_SESSION["user"])) {
 }
 include("fejlec.php");
 ?>
+    <script>
+        function addFriend(user) {
+            var formData = new FormData();
+            formData.append('friend', user);
+            fetch('users.php', {
+                method: 'POST',
+                credentials: 'include',
+                body: formData,
+            })
+            .then(() => {
+                window.location.reload();
+            });
+        }
+    </script>
     <main class="board">
         <h1>
             Ismerősök keresése
@@ -23,13 +37,23 @@ include("fejlec.php");
         ?>
                 <article>
                     <div class="user-data-container">
-                        <img class="thumbnail" src="<?php echo $profile_picture ?>" alt="profile">
-                        <p>
-                            <?php echo $user ?>
-                        </p>
+                        <div class="user-data-wrapper">
+                            <img class="thumbnail" src="<?php echo $profile_picture ?>" alt="profile">
+                            <p>
+                                <?php echo $user ?>
+                            </p>
+                        </div>
+                        <img class="icon" src="assets/add-friend.svg" alt="add friend icon" onclick="addFriend('<?php echo $user ?>')">
                     </div>
                 </article>
         <?php
+            }
+            if (isset($_POST['friend'])) {
+                $db->insertRelation($_SESSION["user"], $_POST['friend']);
+                unset($_POST);
+                $page = $_SERVER['PHP_SELF'];
+                $sec = "10";
+                header("Refresh: $sec; url=$page");
             }
         ?>
     </main>

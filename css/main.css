@@ -216,10 +216,28 @@ article {
 article .user-data-container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 article p {
     overflow-wrap: break-word;
+}
+
+.icon {
+    width: 50px;
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+.user-data-wrapper {
+    min-width: 80px;
+    display: flex;
+}
+
+.user-data-wrapper img {
+    align-self: center;
 }
 
 /* ABOUT */

@@ -6,6 +6,7 @@ if (!isset($_SESSION["user"])) {
     die();
 }
 include("fejlec.php");
+
 ?>
     <main class="board">
         <h1>
@@ -37,10 +38,12 @@ include("fejlec.php");
         ?>
                 <article>
                     <div class="user-data-container user-data-container-border">
-                        <img class="thumbnail" src="<?php echo $profile_picture ?>" alt="profile">
-                        <p>
-                            <?php echo $hir['user_name'] ?>
-                        </p>
+                        <div class="user-data-wrapper">
+                            <img class="thumbnail" src="<?php echo $profile_picture ?>" alt="profile">
+                            <p>
+                                <?php echo $hir['user_name'] ?>
+                            </p>
+                        </div>
                     </div>
                     <p>
                         <?php echo $hir['text'] ?>
