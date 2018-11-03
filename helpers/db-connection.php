@@ -109,6 +109,37 @@
             return $newsArray;
         }
 
+        public function insertRelation($user1, $user2) {
+            $connection = $this->getConnection();
+            $sql =  "INSERT INTO relations (user1, user2) VALUES ('$user1', '$user2');";
+            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
+            mysqli_close($connection);
+        }
+
+        public function getFriends($user) {
+            $connection = $this->getConnection();
+            $sql = "SELECT username FROM users WHERE username IN (SELECT DISTINCT user2 FROM relations WHERE user1='$user') OR username IN (SELECT DISTINCT user1 FROM relations WHERE user2='$user')";
+            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
+            mysqli_close($connection);
+            $friends = array();
+            while (($row = mysqli_fetch_assoc($res))!= null) {
+                $friends[] = $row['username'];
+            }
+            return $friends;
+        }
+
+        public function getOtherPeople($user) {
+            $connection = $this->getConnection();
+            $sql = "SELECT username FROM users WHERE username<>'$user' AND username NOT IN (SELECT DISTINCT user2 FROM relations WHERE user1='$user') AND username NOT IN (SELECT DISTINCT user1 FROM relations WHERE user2='$user')";
+            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
+            mysqli_close($connection);
+            $users = array();
+            while (($row = mysqli_fetch_assoc($res))!= null) {
+                $users[] = $row['username'];
+            }
+            return $users;
+        }
+
         private function getConnection() {
             $connection = mysqli_connect($this->host, $this->uname, $this->pwd, $this->database) or die("Hibás csatlakozás!");
             mysqli_select_db($connection, "facebook");

@@ -58,16 +58,22 @@
                 <li class="<?php echo ($_SERVER['PHP_SELF'] == '/login.php' ? ' active' : '');?>">
                     <a href="login.php">Bejelentkezés</a>
                 </li>
+                <li class="<?php echo ($_SERVER['PHP_SELF'] == '/about.php' ? ' active' : '');?>">
+                    <a href="about.php">Rólunk</a>
+                </li>
         <?php
             }
         ?>
-        <li class="<?php echo ($_SERVER['PHP_SELF'] == '/about.php' ? ' active' : '');?>">
-            <a href="about.php">Rólunk</a>
-        </li>
         <?php
             if (isset($_SESSION["user"])) {
         ?>      <li class="<?php echo ($_SERVER['PHP_SELF'] == '/profile.php' ? ' active' : '');?>">
                     <a href="profile.php">Profil</a>
+                </li>
+                <li class="<?php echo ($_SERVER['PHP_SELF'] == '/users.php' ? ' active' : '');?>">
+                    <a href="users.php">Keresés</a>
+                </li>
+                <li class="<?php echo ($_SERVER['PHP_SELF'] == '/friends.php' ? ' active' : '');?>">
+                    <a href="friends.php">Ismerősök</a>
                 </li>
                 <li class="logout <?php echo ($_SERVER['PHP_SELF'] == '/logout.php' ? ' active' : '');?>">
                     <a href="logout.php">Kijelentkezés</a>

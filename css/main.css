@@ -176,7 +176,7 @@ main.board h1 {
     font-size: 24px;
 }
 
-.user-data-container {
+.user-data-container-border {
     border-bottom: 1px solid #bcbec0;
 }
 
@@ -231,8 +231,8 @@ article p {
 }
 
 .info-icon-container > img {
-    animation-name: rotate-info-icon; 
-    animation-duration: 2s; 
+    animation-name: rotate-info-icon;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     width: 80px;
@@ -248,7 +248,7 @@ article p {
     border-collapse: collapse;
 }
 
-/* LOGIN, REGISTRATION*/ 
+/* LOGIN, REGISTRATION*/
 
 .login, .registration, .about {
     display: flex;

@@ -36,7 +36,7 @@ include("fejlec.php");
                 }
         ?>
                 <article>
-                    <div class="user-data-container">
+                    <div class="user-data-container user-data-container-border">
                         <img class="thumbnail" src="<?php echo $profile_picture ?>" alt="profile">
                         <p>
                             <?php echo $hir['user_name'] ?>
