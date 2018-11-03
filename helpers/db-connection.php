@@ -32,10 +32,8 @@
         }
 
         public function getPassword($user) {
-            $connection = $this->getConnection();
             $sql = "SELECT password FROM users WHERE username='" . $user . "';";
-            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
-            mysqli_close($connection);
+            $res = $this->getSimpleQuerries($sql);
             $passwordArray = array();
             while (($row = mysqli_fetch_assoc($res))!= null) {
                 $passwordArray[] = $row;
@@ -61,7 +59,6 @@
             $resInsert = mysqli_query($connection, $sqlInsertPicture) or die ('Hibás utasítás a kép elmentésénél!');
             $pictureId = $connection->insert_id;
             $sqlPicUserConn = "INSERT INTO pictureowners (pictureid, userName) VALUES ($pictureId, '$owner');";
-            echo $sqlPicUserConn;
             $resPicUserConn = mysqli_query($connection, $sqlPicUserConn) or die ('Hibás utasítás a kép - felhasználó kapcsolat létrehozásánál!');
             $insertId = $connection->insert_id;
             mysqli_close($connection);
@@ -69,10 +66,8 @@
         }
 
         public function getImage($user) {
-            $connection = $this->getConnection();
             $sql = "SELECT file FROM pictures JOIN pictureowners ON id=pictureid WHERE username='$user';";
-            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
-            mysqli_close($connection);
+            $res = $this->getSimpleQuerries($sql);
             $imageArray = array();
             while (($row = mysqli_fetch_assoc($res))!= null) {
                 $imageArray[] = $row;
@@ -84,60 +79,53 @@
         }
 
         public function updatePicture($user, $pictureName, $data) {
-            $connection = $this->getConnection();
             $sql = "UPDATE pictures SET name = '$pictureName', file = '$data' WHERE id=(SELECT pictureid FROM pictureowners WHERE username='$user');";
-            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
-            mysqli_close($connection);
+            $this->getSimpleQuerries($sql);
         }
 
         public function insertNews($user, $newsText) {
-            $connection = $this->getConnection();
             $sql = "INSERT INTO news (user_name, text) VALUES ('$user', '$newsText');";
-            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás a hír eltárolásánal!');
-            mysqli_close($connection);
+            $this->getSimpleQuerries($sql);
         }
 
         public function getNews() {
-            $connection = $this->getConnection();
             $sql = "SELECT * FROM news";
-            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
-            mysqli_close($connection);
-            $newsArray = array();
-            while (($row = mysqli_fetch_assoc($res))!= null) {
-                $newsArray[] = $row;
-            }
-            return $newsArray;
+            return $this->getArrayLikeQueries($sql);
         }
 
         public function insertRelation($user1, $user2) {
-            $connection = $this->getConnection();
             $sql =  "INSERT INTO relations (user1, user2) VALUES ('$user1', '$user2');";
-            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
-            mysqli_close($connection);
+            $this->getSimpleQuerries($sql);
         }
 
         public function getFriends($user) {
-            $connection = $this->getConnection();
             $sql = "SELECT username FROM users WHERE username IN (SELECT DISTINCT user2 FROM relations WHERE user1='$user') OR username IN (SELECT DISTINCT user1 FROM relations WHERE user2='$user')";
-            $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
-            mysqli_close($connection);
-            $friends = array();
-            while (($row = mysqli_fetch_assoc($res))!= null) {
-                $friends[] = $row['username'];
-            }
-            return $friends;
+            return $this->getArrayLikeQueries($sql, 'username');
         }
 
         public function getOtherPeople($user) {
-            $connection = $this->getConnection();
             $sql = "SELECT username FROM users WHERE username<>'$user' AND username NOT IN (SELECT DISTINCT user2 FROM relations WHERE user1='$user') AND username NOT IN (SELECT DISTINCT user1 FROM relations WHERE user2='$user')";
+            return $this->getArrayLikeQueries($sql, 'username');
+        }
+
+        private function getSimpleQuerries($sql) {
+            $connection = $this->getConnection();
             $res = mysqli_query($connection, $sql) or die ('Hibás utasítás!');
             mysqli_close($connection);
-            $users = array();
+            return $res;
+        }
+
+        private function getArrayLikeQueries($sql, $key = false) {
+            $res = $this->getSimpleQuerries($sql);
+            $array = array();
             while (($row = mysqli_fetch_assoc($res))!= null) {
-                $users[] = $row['username'];
+                if ($key) {
+                    $array[] = $row[$key];
+                } else {
+                    $array[] = $row;
+                }
             }
-            return $users;
+            return $array;
         }
 
         private function getConnection() {
