@@ -55,16 +55,25 @@
 
         public function insertPicture($fileName, $data, $owner) {
             $connection = $this->getConnection();
-            $sqlInsertPicture = "INSERT INTO pictures (name, file) VALUES ('$fileName', EMPTY_BLOB()) returning id into :id";
+            $sqlInsertPicture = "DECLARE idp NUMBER; filep BLOB; BEGIN " .
+            "INSERT INTO pictures (name, file_blob) VALUES ('$fileName', EMPTY_BLOB()) returning id, file_blob into :idp, :filep; END;";
             $statementInsert = oci_parse($connection, $sqlInsertPicture) or die ('Hibás utasítás a kép elmentésénél!');
-            $newlob = oci_new_descriptor($connection, OCI_D_LOB);
-            oci_bind_by_name($statementInsert, ":photo", $newlob, -1, OCI_B_BLOB);
-            oci_bind_by_name($statementInsert, ":ID", $pictureId);
-            oci_execute($statementInsert);
+            $blob = oci_new_descriptor($connection, OCI_D_LOB );
+            oci_bind_by_name($statementInsert, "filep", $blob, -1, OCI_B_BLOB );
+            oci_bind_by_name($statementInsert, "idp", $pictureId);
+            oci_execute($statementInsert, OCI_NO_AUTO_COMMIT);
+            if (!$blob->save($data)) {
+                oci_rollback($conn);
+            } else {
+                oci_commit($connection);
+            }
             $sqlPicUserConn = "INSERT INTO pictureowners (pictureid, userName) VALUES ($pictureId, '$owner') returning pictureid into :id";
             $statementPicUserConn = oci_parse($connection, $sqlPicUserConn) or die ('Hibás utasítás a kép - felhasználó kapcsolat létrehozásánál!');
-            oci_bind_by_name($statementPicUserConn, ":ID", $insertId);
+            oci_bind_by_name($statementPicUserConn, ":id", $insertId);
             oci_execute($statementPicUserConn);
+            oci_free_statement($statementInsert);
+            oci_free_statement($statementPicUserConn);
+            $blob->free();
             oci_close($connection);
             return $insertId;
         }
