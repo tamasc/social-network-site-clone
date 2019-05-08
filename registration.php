@@ -32,7 +32,9 @@ function runValidation() {
         }
         $filename = $_FILES["profile-picture"]["name"];
         $tempfile = $_FILES["profile-picture"]["tmp_name"];
-        $data = addslashes(file_get_contents($tempfile));
+        // NOTE: next line is needed for mysql
+        // $data = addslashes(file_get_contents($tempfile));
+        $data = file_get_contents($tempfile);
         $ext = pathinfo(basename($filename), PATHINFO_EXTENSION);
         if(!in_array($ext,  array('jpeg' ,'jpg'))) {
             echo "<p class=\"error\">Csak jpg és jpeg formátumú kép tölthető fel!</p>";

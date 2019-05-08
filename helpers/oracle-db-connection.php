@@ -58,12 +58,12 @@
             $sqlInsertPicture = "DECLARE idp NUMBER; filep BLOB; BEGIN " .
             "INSERT INTO pictures (name, file_blob) VALUES ('$fileName', EMPTY_BLOB()) returning id, file_blob into :idp, :filep; END;";
             $statementInsert = oci_parse($connection, $sqlInsertPicture) or die ('Hibás utasítás a kép elmentésénél!');
-            $blob = oci_new_descriptor($connection, OCI_D_LOB );
-            oci_bind_by_name($statementInsert, "filep", $blob, -1, OCI_B_BLOB );
+            $blob = oci_new_descriptor($connection, OCI_D_LOB);
+            oci_bind_by_name($statementInsert, "filep", $blob, -1, OCI_B_BLOB);
             oci_bind_by_name($statementInsert, "idp", $pictureId);
             oci_execute($statementInsert, OCI_NO_AUTO_COMMIT);
             if (!$blob->save($data)) {
-                oci_rollback($conn);
+                oci_rollback($connection);
             } else {
                 oci_commit($connection);
             }
@@ -81,14 +81,12 @@
         public function getImage($user) {
             $sql = "SELECT file_blob FROM pictures JOIN pictureowners ON id=pictureid WHERE username='$user'";
             $res = $this->getSimpleQuerries($sql);
-            $imageArray = array();
-            while (($row = oci_fetch_assoc($res))!= null) {
-                $imageArray[] = $row;
-            }
-            if (!isset($imageArray[0])) {
+            $imageArray = oci_fetch_array($res, OCI_ASSOC);
+            if (!$imageArray['FILE_BLOB']) {
                 return null;
             }
-            return $imageArray[0]['file'];
+            $image = ($imageArray['FILE_BLOB']->load());
+            return $image;
         }
 
         public function updatePicture($user, $pictureName, $data) {
@@ -128,7 +126,6 @@
 
         private function getSimpleQuerries($sql) {
             $connection = $this->getConnection();
-            echo $sql;
             $statement = oci_parse($connection, $sql) or die ('Hibás utasítás!');
             oci_execute($statement);
             oci_close($connection);
