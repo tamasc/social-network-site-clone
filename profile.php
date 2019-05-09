@@ -28,7 +28,8 @@ if ($rawData != null) {
             if (isset($_FILES["profile-picture"])) {
                 $filename = $_FILES["profile-picture"]["name"];
                 $tempfile = $_FILES["profile-picture"]["tmp_name"];
-                $data = addslashes(file_get_contents($tempfile));
+                $data = file_get_contents($tempfile);
+                // $data = addslashes(file_get_contents($tempfile));
                 $ext = pathinfo(basename($filename), PATHINFO_EXTENSION);
                 if(!in_array($ext,  array('jpeg' ,'jpg'))) {
                     echo "<p class=\"error\">Csak jpg és jpeg formátumú kép tölthető fel!</p>";

@@ -30,7 +30,7 @@ include("fejlec.php");
             $hirek = array_reverse($db->getNews($_SESSION["user"]));
             foreach ($hirek as $hir) {
                 $profile_picture = "assets/profile-placeholder.jpg";
-                $rawData = $db->getImage($hir['user_name']);
+                $rawData = $db->getImage($hir['USER_NAME']);
                 if ($rawData != null) {
                     $data = base64_encode($rawData);
                     $profile_picture = "data:image/jpeg;base64, $data";
@@ -41,12 +41,12 @@ include("fejlec.php");
                         <div class="user-data-wrapper">
                             <img class="thumbnail" src="<?php echo $profile_picture ?>" alt="profile">
                             <p>
-                                <?php echo $hir['user_name'] ?>
+                                <?php echo $hir['USER_NAME'] ?>
                             </p>
                         </div>
                     </div>
                     <p>
-                        <?php echo $hir['text'] ?>
+                        <?php echo $hir['TEXT'] ?>
                     </p>
                 </article>
         <?php

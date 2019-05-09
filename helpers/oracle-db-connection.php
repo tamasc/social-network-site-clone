@@ -90,17 +90,31 @@
         }
 
         public function updatePicture($user, $pictureName, $data) {
-            $sql = "UPDATE pictures SET name = '$pictureName', file = '$data' WHERE id=(SELECT pictureid FROM pictureowners WHERE username='$user')";
-            $this->getSimpleQuerries($sql);
+            $connection = $this->getConnection();
+            $sql = "DECLARE filep BLOB; BEGIN " .
+            "UPDATE pictures SET name='$pictureName', file_blob=EMPTY_BLOB() WHERE id=(SELECT pictureid FROM pictureowners WHERE username='$user') ".
+            "returning file_blob into :filep; END;";
+            $statement = oci_parse($connection, $sql) or die ('Hibás utasítás a kép elmentésénél!');
+            $blob = oci_new_descriptor($connection, OCI_D_LOB);
+            oci_bind_by_name($statement, "filep", $blob, -1, OCI_B_BLOB);
+            oci_execute($statement, OCI_NO_AUTO_COMMIT);
+            if (!$blob->save($data)) {
+                oci_rollback($connection);
+            } else {
+                oci_commit($connection);
+            }
+            oci_free_statement($statement);
+            $blob->free();
+            oci_close($connection);
         }
 
         public function insertNews($user, $newsText) {
-            $sql = "INSERT INTO news (user_name, text) VALUES ('$user', '$newsText');";
+            $sql = "INSERT INTO news (user_name, text) VALUES ('$user', '$newsText')";
             $this->getSimpleQuerries($sql);
         }
 
         public function getNews($user) {
-            $sql = "SELECT * FROM news WHERE user_name IN (SELECT user1 FROM relations WHERE user2='$user') OR user_name IN (SELECT user2 FROM relations WHERE user1='$user')";
+            $sql = "SELECT * FROM news WHERE user_name='$user' OR user_name IN (SELECT user1 FROM relations WHERE user2='$user') OR user_name IN (SELECT user2 FROM relations WHERE user1='$user')";
             return $this->getArrayLikeQueries($sql);
         }
 
@@ -116,18 +130,19 @@
 
         public function getFriends($user) {
             $sql = "SELECT username FROM users WHERE username IN (SELECT DISTINCT user2 FROM relations WHERE user1='$user') OR username IN (SELECT DISTINCT user1 FROM relations WHERE user2='$user')";
-            return $this->getArrayLikeQueries($sql, 'username');
+            return $this->getArrayLikeQueries($sql, 'USERNAME');
         }
 
         public function getOtherPeople($user) {
             $sql = "SELECT username FROM users WHERE username<>'$user' AND username NOT IN (SELECT DISTINCT user2 FROM relations WHERE user1='$user') AND username NOT IN (SELECT DISTINCT user1 FROM relations WHERE user2='$user')";
-            return $this->getArrayLikeQueries($sql, 'username');
+            return $this->getArrayLikeQueries($sql, 'USERNAME');
         }
 
         private function getSimpleQuerries($sql) {
             $connection = $this->getConnection();
             $statement = oci_parse($connection, $sql) or die ('Hibás utasítás!');
             oci_execute($statement);
+            oci_commit($connection);
             oci_close($connection);
             return $statement;
         }
