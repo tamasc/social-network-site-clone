@@ -195,19 +195,45 @@ main.board form {
     flex-direction: column;
 }
 
+.user-data-wrapper.comment-wrapper {
+    border: 1px solid #bcbec0;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #EEE;
+    margin: 8px;
+}
+
+.comment-wrapper p {
+    display: inline-block;
+}
+
+.comment-wrapper .user-name{
+    font-weight: 600;
+}
+
 main.board form input:hover {
     background-color: rgb(56, 93, 168);
 }
 
-article, main.board form {
+article, main.board form.news-form {
     box-sizing: border-box;
     width: 50%;
     min-width: 360px;
     margin: 30px auto;
 }
 
+form.comment-form {
+    width: calc(100% + 41px);
+    margin-left: -30px;
+}
+
+form.comment-form button {
+    border: none;
+}
+
 article {
     padding: 10px;
+    padding-bottom: 0;
     background-color: #FFF;
     border: 1px solid #bcbec0;
     box-shadow: 1px 1px 3px rgba(0,0,0, .5);
@@ -221,6 +247,14 @@ article .user-data-container {
 
 article p {
     overflow-wrap: break-word;
+}
+
+div.comment-wrapper {
+    padding-left: 20px;
+}
+
+div.comment-wrapper article {
+    margin: 10px auto;
 }
 
 .icon {

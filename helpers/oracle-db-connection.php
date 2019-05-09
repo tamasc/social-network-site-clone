@@ -138,6 +138,16 @@
             return $this->getArrayLikeQueries($sql, 'USERNAME');
         }
 
+        public function insertComment($commentId, $user, $text) {
+            $sql = "INSERT INTO COMMENTS(NEWS_ID, USER_ID, TEXT) VALUES('$commentId', '$user', '$text')";
+            $this->getSimpleQuerries($sql);
+        }
+
+        public function getComments($newsId) {
+            $sql = "SELECT USER_ID, TEXT FROM COMMENTS WHERE NEWS_ID='$newsId'";
+            return $this->getArrayLikeQueries($sql);
+        }
+
         private function getSimpleQuerries($sql) {
             $connection = $this->getConnection();
             $statement = oci_parse($connection, $sql) or die ('Hibás utasítás!');

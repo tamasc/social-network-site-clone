@@ -21,10 +21,6 @@ include("fejlec.php");
         <?php
             if (isset($_POST["news"])) {
                 $db->insertNews($_SESSION["user"], $_POST["news"]);
-                $hirek_file = fopen("hirek", "a") or die("nem lehet a fájlt megnyitni");
-                $news_data = $_SESSION["user"] . "|" . $_POST["news"];
-                fwrite($hirek_file, "\n". $news_data);
-                fclose($hirek_file);
                 unset($_POST);
             }
             $hirek = array_reverse($db->getNews($_SESSION["user"]));
@@ -35,6 +31,7 @@ include("fejlec.php");
                     $data = base64_encode($rawData);
                     $profile_picture = "data:image/jpeg;base64, $data";
                 }
+                $hirId = $hir["ID"];
         ?>
                 <article>
                     <div class="user-data-container user-data-container-border">
@@ -48,6 +45,41 @@ include("fejlec.php");
                     <p>
                         <?php echo $hir['TEXT'] ?>
                     </p>
+                    <div class="comment-wrapper">
+                <?php
+                    if (isset($_POST["comment"])) {
+                        $db->insertComment($hirId, $_SESSION["user"], $_POST["comment"]);
+                        unset($_POST);
+                    }
+                    $comments = $db->getComments($hirId);
+                    if ($comments) {
+                        $comments = array_reverse($comments);
+                    }
+                    foreach ($comments as $comment) {
+                        $comment_profile_picture = "assets/profile-placeholder.jpg";
+                        $rawData = $db->getImage($comment['USER_ID']);
+                        if ($rawData != null) {
+                            $data = base64_encode($rawData);
+                            $comment_profile_picture = "data:image/jpeg;base64, $data";
+                        }
+                    ?>
+                        <div class="user-data-wrapper comment-wrapper">
+                            <img class="thumbnail" src="<?php echo $comment_profile_picture ?>" alt="profile">
+                            <p class="user-name">
+                                <?php echo $comment['USER_ID'] ?>
+                            </p>
+                            <p>
+                                <?php echo $comment['TEXT'] ?>
+                            </p>
+                        </div>
+                <?php
+                    }
+                ?>
+                    <form class="comment-form" action="" method="post">
+                        <textarea required name="comment" cols="25" rows="5"></textarea>
+                        <input class="blue-button" type="submit" value="Komment">
+                    </form>
+                    </div>
                 </article>
         <?php
             }
