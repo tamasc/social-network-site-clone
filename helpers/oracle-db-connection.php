@@ -128,6 +128,11 @@
             $this->getSimpleQuerries($sql);
         }
 
+        public function getFriendNumber($user) {
+            $sql = "SELECT COUNT(*) AS NUM FROM (SELECT username FROM users WHERE username IN (SELECT DISTINCT user2 FROM relations WHERE user1='$user') OR username IN (SELECT DISTINCT user1 FROM relations WHERE user2='$user'))";
+            return $this->getSimpleQuerries($sql);
+        }
+
         public function getFriends($user) {
             $sql = "SELECT username FROM users WHERE username IN (SELECT DISTINCT user2 FROM relations WHERE user1='$user') OR username IN (SELECT DISTINCT user1 FROM relations WHERE user2='$user')";
             return $this->getArrayLikeQueries($sql, 'USERNAME');

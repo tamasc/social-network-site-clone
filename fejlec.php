@@ -29,11 +29,12 @@
             $alt = $user ? 'profile picture' : 'profile picture placeholder';
             if ($user) {
                 $rawData = $db->getImage($user);
+                $friendNumber = oci_fetch_assoc($db->getFriendNumber($user))["NUM"];
                 if ($rawData != null) {
                     $data = base64_encode($rawData);
                     $profile_picture = "data:image/jpeg;base64, $data";
+                    echo "<div>$user($friendNumber)</div>";
                 }
-                echo "<div>$user</div>";
             }
             echo "<img src=\"$profile_picture\" alt=\"$alt\">";
         ?>
