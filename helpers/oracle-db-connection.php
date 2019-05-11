@@ -140,6 +140,26 @@
 
         public function getOtherPeople($user) {
             $sql = "SELECT username FROM users WHERE username<>'$user' AND username NOT IN (SELECT DISTINCT user2 FROM relations WHERE user1='$user') AND username NOT IN (SELECT DISTINCT user1 FROM relations WHERE user2='$user')";
+            // $sql =  "DECLARE ".
+            //         "ind BINARY_INTEGER := 1; ".
+            //         "TYPE tipus IS TABLE OF users.username%TYPE INDEX BY BINARY_INTEGER; ".
+            //         ":tabla tipus; ".
+            //         "CURSOR friends_cur IS SELECT username FROM users WHERE username IN (SELECT DISTINCT user2 FROM relations WHERE user1='lefety') OR username IN (SELECT DISTINCT user1 FROM relations WHERE user2='lefety'); ".
+            //         "BEGIN ".
+            //         "FOR friend IN friends_cur LOOP ".
+            //         "FOR potFriend IN (SELECT username FROM users WHERE username IN (SELECT DISTINCT user2 FROM relations WHERE user1=friend.username) OR username IN (SELECT DISTINCT user1 FROM relations WHERE user2=friend.username)) LOOP ".
+            //         "IF potFriend.username != 'lefety' THEN ".
+            //         ":tabla(ind) := potFriend.username; ".
+            //         "ind := ind + 1; ".
+            //         "END IF; ".
+            //         "END LOOP potFriend; ".
+            //         "END LOOP; ".
+            //         "ind := :tabla.FIRST; ".
+            //         "LOOP ".
+            //         "ind := ind + 1; ".
+            //         "EXIT WHEN ind > :tabla.LAST; ".
+            //         "END LOOP; ".
+            //         "END; ";
             return $this->getArrayLikeQueries($sql, 'USERNAME');
         }
 
